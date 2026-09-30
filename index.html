@@ -435,6 +435,25 @@ body.is-windows .wa-help{display:none;}
 .toast-x{position:absolute;top:6px;right:8px;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;line-height:1;}
 html:not(.js) .wa-help,html:not(.js) .modal,html:not(.js) .toast{display:none!important;}
 @media print{ .modal,.toast{display:none!important;} }
+
+/* ---------- Uygulama yükleme penceresi ---------- */
+.install-head{display:flex;align-items:center;gap:14px;margin-bottom:10px;}
+.install-icon{width:64px;height:64px;border-radius:14px;flex:0 0 auto;box-shadow:0 4px 12px rgba(18,51,61,.2);}
+.install-head h2{font-size:19px;margin:0;font-weight:700;color:var(--ink);}
+.install-sub{font-size:13px;color:var(--muted);margin-top:2px;}
+.install-benefits{margin:4px 0 12px;padding-left:20px;font-size:14.5px;line-height:1.6;color:#2b3f47;}
+.inst-ios,.inst-manual,#install-go,#install-ok{display:none;}
+.mode-prompt #install-go{display:inline-flex;}
+.mode-ios .inst-ios,.mode-manual .inst-manual{display:block;}
+.mode-ios #install-ok,.mode-manual #install-ok{display:inline-flex;}
+.mode-ios .install-benefits,.mode-manual .install-benefits{display:none;}
+.inst-manual .m-android{display:none;} .is-android .inst-manual .m-android{display:list-item;} .is-android .inst-manual .m-desktop{display:none;}
+.ios-share{width:22px;height:22px;vertical-align:-5px;background:#eef5ff;border-radius:6px;padding:2px;}
+.muted-s{color:var(--muted);font-size:13px;}
+.btn-install{background:var(--ink);color:#fff;}
+.install-btn{display:none;margin:18px auto 0;align-items:center;gap:8px;border:none;background:var(--ink);color:#fff;border-radius:11px;padding:12px 20px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--font);min-height:48px;}
+body.can-install .install-btn{display:inline-flex;}
+html:not(.js) .install-btn{display:none!important;}
 </style>
 </head>
 <body>
@@ -480,6 +499,7 @@ html:not(.js) .wa-help,html:not(.js) .modal,html:not(.js) .toast{display:none!im
       </button>
     </div>
     <button class="linkshare" type="button" onclick="shareFormLink()">&#128279; Boş formu bağlantı olarak gönder</button>
+    <button type="button" class="install-btn" onclick="showInstall()">&#11015; Uygulamayı yükle</button>
     <button type="button" class="wa-help" onclick="openWaGuide(true)">WhatsApp paylaşım menüsünde görünmüyor mu? Nasıl sabitlenir</button>
     <div class="home-foot">Formu doldurduktan sonra alttaki menüden PDF olarak kaydedebilir, yazdırabilir veya e-posta / WhatsApp ile gönderebilirsiniz.<br>Bize gönderilen form patolog tarafından açılıp Laboratuvar Kullanım Alanı doldurulabilir şekilde düzenlenebilir.</div>
   </div>
@@ -1271,6 +1291,38 @@ html:not(.js) .wa-help,html:not(.js) .modal,html:not(.js) .toast{display:none!im
   </div>
 </div>
 <div id="toast" class="toast" role="status" hidden><div class="toast-msg"></div><div class="toast-actions"></div><button type="button" class="toast-x" aria-label="Kapat">&times;</button></div>
+<div id="install-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="install-title" hidden>
+  <div class="modal-card install-card">
+    <div class="install-head"><img src="icon-192.png" alt="" class="install-icon"><div><h2 id="install-title">Uygulama olarak yükleyin</h2><div class="install-sub">Burdur MAKÜ Veteriner Patoloji Formları</div></div></div>
+    <ul class="install-benefits">
+      <li>Ana ekrandan / masaüstünden <b>simgesiyle tek dokunuşla</b> açılır</li>
+      <li>Tam ekran çalışır, <b>internet olmadan da</b> açılır</li>
+      <li>Her açılışta güncel sürüm gelir</li>
+    </ul>
+    <div class="inst-ios">
+      <ol class="g-steps">
+        <li>Paylaş simgesine dokunun <svg class="ios-share" viewBox="0 0 24 24" fill="none" stroke="#0a84ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Paylaş simgesi"><path d="M12 3v12"/><path d="M8 7l4-4 4 4"/><path d="M5 11v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8"/></svg> <span class="muted-s">(iPhone'da altta, iPad'de sağ üstte)</span></li>
+        <li><b>Ana Ekrana Ekle</b>'yi seçin <span class="muted-s">(listede aşağı kaydırmanız gerekebilir)</span></li>
+        <li>Sağ üstte <b>Ekle</b>'ye dokunun</li>
+      </ol>
+      <p class="modal-tip">Menüde "Ana Ekrana Ekle" görünmüyorsa bağlantıyı önce <b>Safari</b>'de açın.</p>
+    </div>
+    <div class="inst-manual">
+      <p class="modal-tip">Tarayıcınız yükleme penceresini henüz hazırlamadı. Şöyle yükleyebilirsiniz:</p>
+      <ol class="g-steps">
+        <li class="m-android">Sağ üstteki <b>&#8942;</b> menüsüne dokunun → <b>Uygulamayı yükle</b> ya da <b>Ana ekrana ekle</b>.</li>
+        <li class="m-desktop"><b>Chrome:</b> adres çubuğunun sağındaki yükle simgesine tıklayın ya da <b>&#8942; → Kaydet ve paylaş → Sayfayı uygulama olarak yükle</b>.</li>
+        <li class="m-desktop"><b>Edge:</b> <b>&#8943; → Uygulamalar → Bu siteyi uygulama olarak yükle</b>.</li>
+        <li class="m-desktop">Firefox uygulama yüklemeyi desteklemez; bağlantıyı Chrome veya Edge ile açın.</li>
+      </ol>
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" id="install-later">Daha sonra</button>
+      <button type="button" class="btn btn-install" id="install-go">Yükle</button>
+      <button type="button" class="btn btn-install" id="install-ok">Tamam</button>
+    </div>
+  </div>
+</div>
 <div id="print-summary" aria-hidden="true"></div>
 
 <script>
@@ -1732,6 +1784,67 @@ function waWindowsGo(mode){
   document.querySelectorAll('.modal').forEach(function(m){ m.addEventListener('click', function(e){ if(e.target===m) hideOverlays(); }); });
   var tx=document.querySelector('#toast .toast-x'); if(tx) tx.addEventListener('click', function(){ document.getElementById('toast').hidden=true; });
 })();
+// ====== Uygulama olarak yükleme ======
+var _deferredPrompt=null;
+function isStandalone(){
+  var mm=window.matchMedia?function(q){return matchMedia(q).matches;}:function(){return false;};
+  return mm('(display-mode: standalone)')||mm('(display-mode: fullscreen)')||mm('(display-mode: minimal-ui)')||mm('(display-mode: window-controls-overlay)')||window.navigator.standalone===true;
+}
+function installContextOK(){
+  var web=location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1';
+  return web && !isStandalone();
+}
+function setInstallMode(){
+  var m=document.getElementById('install-modal'); if(!m) return;
+  m.classList.remove('mode-prompt','mode-ios','mode-manual');
+  m.classList.add(_deferredPrompt?'mode-prompt':(isIOS()?'mode-ios':'mode-manual'));
+  m.classList.toggle('is-android', /Android/i.test(navigator.userAgent));
+}
+function showInstall(){
+  if(!installContextOK()) return;
+  setInstallMode();
+  document.getElementById('install-modal').hidden=false;
+}
+function hideInstall(){ var m=document.getElementById('install-modal'); if(m) m.hidden=true; }
+window.addEventListener('beforeinstallprompt', function(e){
+  e.preventDefault(); _deferredPrompt=e;
+  var m=document.getElementById('install-modal'); if(m && !m.hidden) setInstallMode();
+});
+window.addEventListener('appinstalled', function(){
+  _deferredPrompt=null; lsSet('installDone','1');
+  document.body.classList.remove('can-install'); hideInstall();
+  showToast('Uygulama yüklendi. "Patoloji Formları" simgesiyle ana ekranınızda / Başlat menünüzde bulabilirsiniz.', []);
+});
+(function(){
+  if(isStandalone()) lsSet('installDone','1');
+  document.body.classList.toggle('can-install', installContextOK());
+  var go=document.getElementById('install-go');
+  if(go) go.addEventListener('click', function(){
+    if(!_deferredPrompt){ setInstallMode(); return; }
+    var p=_deferredPrompt; _deferredPrompt=null;
+    try{ p.prompt(); }catch(e){}
+    Promise.resolve(p.userChoice).then(function(c){ if(c && c.outcome==='accepted'){ hideInstall(); } else { setInstallMode(); } }).catch(function(){});
+  });
+  var ok=document.getElementById('install-ok'); if(ok) ok.addEventListener('click', hideInstall);
+  var later=document.getElementById('install-later');
+  if(later) later.addEventListener('click', function(){ lsSet('installLater', String(Date.now())); hideInstall(); });
+  // Linkten ilk açılışta otomatik sor (yüklü değilse, son 7 günde "Daha sonra" denmediyse, ana menüdeyken)
+  if(!installContextOK() || lsGet('installDone')==='1') return;
+  var last=parseInt(lsGet('installLater')||'0',10);
+  if(last && (Date.now()-last) < 7*24*3600*1000) return;
+  var shown=false;
+  function autoShow(){
+    if(shown) return; shown=true;
+    if(document.body.classList.contains('form-active')) return;   // formu doldururken araya girme
+    showInstall();
+  }
+  if(isIOS()){ setTimeout(autoShow, 1200); }
+  else {
+    window.addEventListener('beforeinstallprompt', function(){ setTimeout(autoShow, 300); });
+    setTimeout(autoShow, 3500);   // tarayıcı yükleme penceresini hazırlamadıysa menü yönergesi gösterilir
+  }
+})();
+
 
 // ====== Boş formu bağlantı (link) olarak gönder ======
 // Formun çevrimiçi adresi, dosyadaki id="form-url" bağlantısının href değerinden okunur.
