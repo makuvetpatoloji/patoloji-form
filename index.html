@@ -403,6 +403,38 @@ html.js.ios-standalone #launch{display:flex;}
 #launch.hide{opacity:0;pointer-events:none;}
 @media (prefers-reduced-motion: reduce){ #launch{transition:none;} }
 @media print{ #launch{display:none!important;} }
+
+/* ---------- WhatsApp yönlendirme / Windows seçimi / bildirim ---------- */
+.modal{position:fixed;inset:0;z-index:300;background:rgba(10,25,32,.55);display:flex;align-items:center;justify-content:center;padding:16px;}
+.modal[hidden]{display:none!important;}
+.modal-card{width:100%;max-width:500px;max-height:calc(100vh - 32px);overflow:auto;background:#fff;border-radius:16px;box-shadow:0 18px 48px rgba(0,0,0,.3);padding:20px 20px 16px;color:var(--ink);font-family:var(--font);}
+.modal-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.modal-head h2{font-size:18px;margin:0;font-weight:700;}
+.wa-badge{width:38px;height:38px;border-radius:50%;background:#25d366;color:#fff;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;}
+.wa-badge svg{width:22px;height:22px;}
+.modal-lead{font-size:14.5px;line-height:1.5;margin:4px 0 10px;color:#2b3f47;}
+.modal-q{font-size:15px;font-weight:700;margin:12px 0 8px;}
+.g-steps{margin:6px 0 10px;padding-left:22px;font-size:15px;line-height:1.55;}
+.g-steps li{margin-bottom:8px;}
+.g-ios{display:none;}
+.modal.is-ios .g-ios{display:block;} .modal.is-ios .g-android{display:none;}
+.modal-tip{font-size:13px;color:var(--muted);background:#f3f7f8;border-radius:10px;padding:9px 11px;margin:6px 0 10px;line-height:1.45;}
+.modal-check{display:flex;align-items:center;gap:8px;font-size:14px;margin:6px 0 12px;cursor:pointer;}
+.modal-check input{width:20px;height:20px;}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;}
+.modal-actions.col{flex-direction:column;align-items:stretch;}
+.modal.info-only .only-send{display:none!important;}
+.wa-help{display:block;margin:14px auto 0;background:none;border:none;color:#128c7e;font-weight:600;font-size:13.5px;text-decoration:underline;cursor:pointer;font-family:var(--font);padding:6px;}
+body.is-windows .wa-help{display:none;}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:92px;z-index:250;width:calc(100% - 24px);max-width:560px;background:#12333d;color:#fff;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.3);padding:12px 40px 12px 14px;font-size:14px;line-height:1.45;font-family:var(--font);}
+.toast[hidden]{display:none!important;}
+.toast-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.toast-actions:empty{display:none;}
+.toast-actions button{background:#fff;color:#12333d;border:none;border-radius:8px;padding:8px 12px;font-weight:700;font-size:13.5px;cursor:pointer;font-family:var(--font);}
+.toast-actions button.primary{background:#25d366;color:#fff;}
+.toast-x{position:absolute;top:6px;right:8px;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;line-height:1;}
+html:not(.js) .wa-help,html:not(.js) .modal,html:not(.js) .toast{display:none!important;}
+@media print{ .modal,.toast{display:none!important;} }
 </style>
 </head>
 <body>
@@ -448,6 +480,7 @@ html.js.ios-standalone #launch{display:flex;}
       </button>
     </div>
     <button class="linkshare" type="button" onclick="shareFormLink()">&#128279; Boş formu bağlantı olarak gönder</button>
+    <button type="button" class="wa-help" onclick="openWaGuide(true)">WhatsApp paylaşım menüsünde görünmüyor mu? Nasıl sabitlenir</button>
     <div class="home-foot">Formu doldurduktan sonra alttaki menüden PDF olarak kaydedebilir, yazdırabilir veya e-posta / WhatsApp ile gönderebilirsiniz.<br>Bize gönderilen form patolog tarafından açılıp Laboratuvar Kullanım Alanı doldurulabilir şekilde düzenlenebilir.</div>
   </div>
 </div>
@@ -1202,6 +1235,42 @@ html.js.ios-standalone #launch{display:flex;}
   <button type="button" class="lb-close" onclick="closeLightbox()" aria-label="Kapat">×</button>
   <img alt="Fotoğraf" onclick="toggleZoom(this)">
 </div>
+<div id="wa-guide" class="modal" role="dialog" aria-modal="true" aria-labelledby="wa-guide-title" hidden>
+  <div class="modal-card">
+    <div class="modal-head"><span class="wa-badge"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.1-.6.2-.2.3-.7 1-.9 1.1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.6-1.5-.9-2-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.7-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.1-.2-.3-.2-.6-.4zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.4 1.3 4.9L2 22l5.3-1.4c1.4.8 3 1.2 4.7 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg></span><h2 id="wa-guide-title">WhatsApp ile gönder</h2></div>
+    <p class="modal-lead only-send">Birazdan paylaşım menüsü açılacak. Form dosyası <b>hazır ekli</b> olacak.</p>
+    <ol class="g-steps g-android">
+      <li>Menüde <b>WhatsApp</b>'a dokunun, kişiyi seçip gönderin.</li>
+      <li>WhatsApp görünmüyorsa menüyü <b>yukarı kaydırarak</b> tüm uygulamaları açın.</li>
+      <li><b>Bir kereliğine:</b> WhatsApp simgesine <b>basılı tutun → Sabitle</b>. Bundan sonra WhatsApp hep ilk sırada çıkar.</li>
+    </ol>
+    <ol class="g-steps g-ios">
+      <li>Menüde <b>WhatsApp</b>'a dokunun, kişiyi seçip gönderin.</li>
+      <li>WhatsApp görünmüyorsa uygulama sırasını <b>sola kaydırın</b>, en sondaki <b>Diğer</b>'e dokunun.</li>
+      <li><b>Bir kereliğine:</b> Diğer → sağ üstte <b>Düzenle</b> → WhatsApp'ın yanındaki <b>+</b> → <b>Bitti</b>. Bundan sonra WhatsApp hep ilk sırada çıkar.</li>
+    </ol>
+    <p class="modal-tip">&#128161; Sık yazıştığınız WhatsApp kişileri menünün en üst satırında da görünebilir; dokununca dosya doğrudan o kişiye gider.</p>
+    <label class="modal-check only-send"><input type="checkbox" id="wa-guide-hide"> Bu açıklamayı bir daha gösterme</label>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" data-close>Kapat</button>
+      <button type="button" class="btn btn-wa only-send" id="wa-guide-go">Paylaşım menüsünü aç</button>
+    </div>
+  </div>
+</div>
+<div id="wa-win" class="modal" role="dialog" aria-modal="true" aria-labelledby="wa-win-title" hidden>
+  <div class="modal-card">
+    <div class="modal-head"><span class="wa-badge"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.1-.6.2-.2.3-.7 1-.9 1.1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.6-1.5-.9-2-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.7-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.1-.2-.3-.2-.6-.4zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.4 1.3 4.9L2 22l5.3-1.4c1.4.8 3 1.2 4.7 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg></span><h2 id="wa-win-title">WhatsApp ile gönder</h2></div>
+    <p class="modal-lead">Form dosyası indirilecek ve WhatsApp açılacak. Kişiyi seçtikten sonra dosyayı sohbet penceresine <b>sürükleyip bırakın</b> ya da ataç &#128206; ile ekleyin.</p>
+    <p class="modal-q">Bu bilgisayarda WhatsApp uygulaması yüklü mü?</p>
+    <div class="modal-actions col">
+      <button type="button" class="btn btn-wa" data-wa="app">Evet — WhatsApp uygulamasıyla aç</button>
+      <button type="button" class="btn btn-mail" data-wa="web">Hayır — WhatsApp Web'de aç</button>
+    </div>
+    <label class="modal-check"><input type="checkbox" id="wa-win-remember" checked> Seçimimi hatırla</label>
+    <div class="modal-actions"><button type="button" class="btn btn-ghost" data-close>Vazgeç</button></div>
+  </div>
+</div>
+<div id="toast" class="toast" role="status" hidden><div class="toast-msg"></div><div class="toast-actions"></div><button type="button" class="toast-x" aria-label="Kapat">&times;</button></div>
 <div id="print-summary" aria-hidden="true"></div>
 
 <script>
@@ -1452,7 +1521,7 @@ function toggleZoom(img){ img.classList.toggle('zoomed'); }
 (function(){
   var lb=document.getElementById('lightbox');
   if(lb){ lb.addEventListener('click', function(e){ if(e.target===lb){ closeLightbox(); } }); }
-  document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ closeLightbox(); } });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ closeLightbox(); hideOverlays(); } });
   // delegated: remove thumb OR open full image (works for restored/saved files too)
   document.addEventListener('click', function(e){
     var t=e.target;
@@ -1507,7 +1576,7 @@ function requireOwner(){
   return false;
 }
 function buildFilledFile(){
-  try{ cleanupPrint(); restoreTitle(); closeLightbox(); }catch(e){}
+  try{ cleanupPrint(); restoreTitle(); closeLightbox(); hideOverlays(); }catch(e){}
   var f=activeForm();
   if(f) document.body.setAttribute('data-openview', f.id);
   reflectValues();
@@ -1576,7 +1645,93 @@ function fallbackShare(kind, r, canOpen){
   }
 }
 function sendEmail(){ shareForm('email'); }
-function sendWhatsApp(){ shareForm('whatsapp'); }
+// ====== WhatsApp ======
+function isWindows(){ var p=(navigator.userAgentData&&navigator.userAgentData.platform)||navigator.platform||''; return /^win/i.test(p) || /Windows NT/.test(navigator.userAgent); }
+function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k,v){ try{ if(v==null) localStorage.removeItem(k); else localStorage.setItem(k,v); }catch(e){} }
+function hideOverlays(){
+  document.querySelectorAll('.modal').forEach(function(m){ m.hidden=true; });
+  var t=document.getElementById('toast'); if(t) t.hidden=true;
+}
+var _toastTimer=null;
+function showToast(html, actions){
+  var t=document.getElementById('toast'); if(!t) return;
+  t.querySelector('.toast-msg').innerHTML=html;
+  var a=t.querySelector('.toast-actions'); a.innerHTML='';
+  (actions||[]).forEach(function(x){
+    var b=document.createElement('button'); b.type='button'; b.textContent=x.label; if(x.primary) b.className='primary';
+    b.addEventListener('click', function(){ x.fn(); });
+    a.appendChild(b);
+  });
+  t.hidden=false;
+  clearTimeout(_toastTimer); _toastTimer=setTimeout(function(){ t.hidden=true; }, 20000);
+}
+function sendWhatsApp(){
+  if(!requireOwner()) return;
+  if(isWindows()){ waWindowsStart(); return; }
+  if(lsGet('waGuideHide')==='1'){ shareForm('whatsapp'); return; }
+  openWaGuide(false);
+}
+function openWaGuide(infoOnly){
+  var m=document.getElementById('wa-guide'); if(!m) return;
+  m.classList.toggle('info-only', !!infoOnly);
+  m.classList.toggle('is-ios', isIOS());
+  var cb=document.getElementById('wa-guide-hide'); if(cb) cb.checked=false;
+  m.hidden=false;
+}
+// Windows: uygulama yüklüyse uygulama, değilse WhatsApp Web
+function waWindowsStart(){
+  var pref=lsGet('waWinMode');
+  if(pref==='app' || pref==='web'){ waWindowsGo(pref); return; }
+  document.getElementById('wa-win').hidden=false;
+}
+function waWindowsGo(mode){
+  var r=buildFilledFile();
+  downloadFile(r.name, r.html);
+  var text=encodeURIComponent(sendMsgText());
+  var webUrl='https://web.whatsapp.com/send?text='+text;
+  var fileLine='Form dosyası indirildi: <b>'+_esc(r.name)+'</b><br>';
+  var how='Kişiyi seçip dosyayı sohbet penceresine sürükleyip bırakın ya da ataç &#128206; ile ekleyin.';
+  function openWeb(){ window.open(webUrl, '_blank'); }
+  function changePref(){ lsSet('waWinMode', null); showToast('Tercih sıfırlandı. WhatsApp butonuna tekrar bastığınızda yeniden sorulacak.', []); }
+  if(mode==='web'){
+    openWeb();
+    showToast(fileLine+'WhatsApp Web açıldı. '+how, [{label:'Tercihimi değiştir', fn:changePref}]);
+    return;
+  }
+  var opened=false;
+  function mark(){ opened=true; }
+  window.addEventListener('blur', mark, {once:true});
+  document.addEventListener('visibilitychange', function(){ if(document.hidden) opened=true; }, {once:true});
+  try{ window.location.href='whatsapp://send?text='+text; }catch(e){}
+  showToast(fileLine+'WhatsApp uygulaması açılıyor. '+how, [{label:"WhatsApp Web'de aç", fn:openWeb}]);
+  setTimeout(function(){
+    if(opened) return;
+    showToast(fileLine+'WhatsApp uygulaması açılmadıysa bu bilgisayarda yüklü olmayabilir.',
+      [{label:"WhatsApp Web'de aç", primary:true, fn:function(){ lsSet('waWinMode','web'); openWeb(); }},
+       {label:'Tercihimi değiştir', fn:changePref}]);
+  }, 2500);
+}
+(function(){
+  document.body.classList.toggle('is-windows', isWindows());
+  var go=document.getElementById('wa-guide-go');
+  if(go) go.addEventListener('click', function(){
+    var cb=document.getElementById('wa-guide-hide'); if(cb && cb.checked) lsSet('waGuideHide','1');
+    hideOverlays();
+    shareForm('whatsapp');
+  });
+  document.querySelectorAll('#wa-win [data-wa]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var mode=b.getAttribute('data-wa');
+      var rem=document.getElementById('wa-win-remember'); if(rem && rem.checked) lsSet('waWinMode', mode);
+      hideOverlays();
+      waWindowsGo(mode);
+    });
+  });
+  document.querySelectorAll('.modal [data-close]').forEach(function(b){ b.addEventListener('click', hideOverlays); });
+  document.querySelectorAll('.modal').forEach(function(m){ m.addEventListener('click', function(e){ if(e.target===m) hideOverlays(); }); });
+  var tx=document.querySelector('#toast .toast-x'); if(tx) tx.addEventListener('click', function(){ document.getElementById('toast').hidden=true; });
+})();
 
 // ====== Boş formu bağlantı (link) olarak gönder ======
 // Formun çevrimiçi adresi, dosyadaki id="form-url" bağlantısının href değerinden okunur.
