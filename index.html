@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
 <meta charset="utf-8">
-<script>document.documentElement.className+=' js';</script>
+<script>document.documentElement.className+=' js'+(window.navigator.standalone?' ios-standalone':'');</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Burdur MAKÜ Veteriner Patoloji — Form Menüsü</title>
 <link rel="icon" sizes="32x32" href="data:image/png;base64,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">
@@ -393,9 +393,20 @@ html:not(.js) body.form-active{padding-bottom:24px;}
 /* Bağlantı olarak gönder düğmesi */
 .linkshare{display:none;margin:18px auto 0;align-items:center;gap:8px;border:1.5px solid var(--line-strong);background:#fff;color:var(--ink);border-radius:11px;padding:11px 18px;font-size:14.5px;font-weight:600;cursor:pointer;font-family:var(--font);min-height:46px;}
 body.has-formurl .linkshare{display:inline-flex;}
+
+/* ---------- Uygulama açılış ekranı (telefon/tablet, uygulama modunda) ---------- */
+#launch{display:none;position:fixed;inset:0;z-index:9999;background:#e9eef1;flex-direction:column;align-items:center;justify-content:center;transition:opacity .35s ease;}
+#launch img{width:128px;height:128px;border-radius:24px;box-shadow:0 6px 22px rgba(18,51,61,.18);}
+#launch .launch-name{position:absolute;left:16px;right:16px;bottom:calc(44px + env(safe-area-inset-bottom,0px));text-align:center;font-size:16px;font-weight:600;color:#12333d;letter-spacing:.01em;}
+@media (display-mode: standalone) and (pointer: coarse), (display-mode: fullscreen) and (pointer: coarse){ html.js #launch{display:flex;} }
+html.js.ios-standalone #launch{display:flex;}
+#launch.hide{opacity:0;pointer-events:none;}
+@media (prefers-reduced-motion: reduce){ #launch{transition:none;} }
+@media print{ #launch{display:none!important;} }
 </style>
 </head>
 <body>
+<div id="launch" aria-hidden="true"><img src="icon-192.png" alt=""><div class="launch-name">Burdur MAKÜ Veteriner Patoloji Formları</div></div>
 <div class="nojs-banner" role="note">
   <div class="nb-inner">
     <div class="nb-title">&#9888; Bu dosya önizleme ekranında açıldı</div>
@@ -1501,9 +1512,9 @@ function buildFilledFile(){
   if(f) document.body.setAttribute('data-openview', f.id);
   reflectValues();
   var root=document.documentElement;
-  root.classList.remove('js');                       // önizlemede (JS kapalı) doğru görünüm için
+  root.classList.remove('js'); root.classList.remove('ios-standalone');                       // önizlemede (JS kapalı) doğru görünüm için
   var html='<!DOCTYPE html>\n'+root.outerHTML;
-  root.classList.add('js');
+  root.classList.add('js'); if(window.navigator.standalone) root.classList.add('ios-standalone');
   return { name: ownerFileName()+'.html', html: html };
 }
 function downloadFile(name, html){
@@ -1615,6 +1626,15 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 </script>
 <script>
+(function(){
+  var el=document.getElementById('launch'); if(!el) return;
+  if(getComputedStyle(el).display==='none'){ el.parentNode.removeChild(el); return; }   // uygulama modu değil
+  var done=false;
+  function hide(){ if(done) return; done=true; el.classList.add('hide'); setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); }, 400); }
+  function later(){ var t=(window.performance&&performance.now)?performance.now():0; setTimeout(hide, Math.max(0, 900-t)); }
+  if(document.readyState==='complete') later(); else window.addEventListener('load', later);
+  setTimeout(hide, 3000);
+})();
 if('serviceWorker' in navigator && location.protocol==='https:'){
   window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); });
 }
