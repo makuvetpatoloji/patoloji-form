@@ -454,6 +454,29 @@ html:not(.js) .wa-help,html:not(.js) .modal,html:not(.js) .toast{display:none!im
 .install-btn{display:none;margin:18px auto 0;align-items:center;gap:8px;border:none;background:var(--ink);color:#fff;border-radius:11px;padding:12px 20px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--font);min-height:48px;}
 body.can-install .install-btn{display:inline-flex;}
 html:not(.js) .install-btn{display:none!important;}
+
+/* ---------- Bilgi mesajı paneli ---------- */
+.modal.sheet{align-items:flex-end;padding:0;}
+.modal.sheet .modal-card{max-width:560px;border-radius:18px 18px 0 0;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px));}
+@media (min-width:700px){ .modal.sheet{align-items:center;padding:16px;} .modal.sheet .modal-card{border-radius:16px;} }
+.ok-badge{width:38px;height:38px;border-radius:50%;background:#1a7f37;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;flex:0 0 auto;}
+.ms-send{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;font-size:16px;min-height:54px;}
+.ms-send svg{width:22px;height:22px;flex:0 0 auto;}
+.ms-note{font-size:12.5px;color:var(--muted);margin:7px 2px 10px;text-align:center;}
+.ms-dept{display:none;} .has-dept .ms-dept{display:inline;} .has-dept .ms-recent{display:none;}
+.ms-web{display:none;width:100%;margin:0 0 10px;}
+.is-desktop .ms-web{display:flex;justify-content:center;}
+.ms-clip{display:none;font-size:13.5px;background:#f3f7f8;border-radius:10px;padding:10px 12px;margin:0 0 10px;line-height:1.5;color:#2b3f47;}
+.copied .ms-clip{display:block;}
+.ms-desk{display:none;} .is-desktop .ms-desk{display:inline;} .is-desktop .ms-mob{display:none;}
+.ms-copy{border:1px solid var(--line-strong);background:#fff;color:var(--ink);border-radius:7px;padding:3px 9px;font-size:12.5px;font-weight:600;cursor:pointer;margin-left:4px;font-family:var(--font);}
+.ms-details{margin:2px 0 12px;font-size:13px;}
+.ms-details summary{cursor:pointer;color:var(--muted);font-weight:600;}
+.ms-preview{white-space:pre-wrap;font-family:var(--font);font-size:13px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:9px 11px;margin:8px 0 0;color:var(--ink);}
+#hint-top{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);z-index:260;background:#12333d;color:#fff;border-radius:999px;padding:10px 16px;font-size:13.5px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.25);width:max-content;max-width:calc(100% - 24px);text-align:center;font-family:var(--font);line-height:1.35;}
+#hint-top[hidden]{display:none!important;}
+html:not(.js) #hint-top{display:none!important;}
+@media print{ #hint-top{display:none!important;} }
 </style>
 </head>
 <body>
@@ -1258,7 +1281,6 @@ html:not(.js) .install-btn{display:none!important;}
 <div id="wa-guide" class="modal" role="dialog" aria-modal="true" aria-labelledby="wa-guide-title" hidden>
   <div class="modal-card">
     <div class="modal-head"><span class="wa-badge"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.1-.6.2-.2.3-.7 1-.9 1.1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.6-1.5-.9-2-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.7-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.1-.2-.3-.2-.6-.4zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.4 1.3 4.9L2 22l5.3-1.4c1.4.8 3 1.2 4.7 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg></span><h2 id="wa-guide-title">WhatsApp ile gönder</h2></div>
-    <p class="modal-lead only-send">Birazdan paylaşım menüsü açılacak. Form dosyası <b>hazır ekli</b> olacak.</p>
     <ol class="g-steps g-android">
       <li>Menüde <b>WhatsApp</b>'a dokunun, kişiyi seçip gönderin.</li>
       <li>WhatsApp görünmüyorsa menüyü <b>yukarı kaydırarak</b> tüm uygulamaları açın.</li>
@@ -1270,10 +1292,8 @@ html:not(.js) .install-btn{display:none!important;}
       <li><b>Bir kereliğine:</b> Diğer → sağ üstte <b>Düzenle</b> → WhatsApp'ın yanındaki <b>+</b> → <b>Bitti</b>. Bundan sonra WhatsApp hep ilk sırada çıkar.</li>
     </ol>
     <p class="modal-tip">&#128161; Sık yazıştığınız WhatsApp kişileri menünün en üst satırında da görünebilir; dokununca dosya doğrudan o kişiye gider.</p>
-    <label class="modal-check only-send"><input type="checkbox" id="wa-guide-hide"> Bu açıklamayı bir daha gösterme</label>
     <div class="modal-actions">
       <button type="button" class="btn btn-ghost" data-close>Kapat</button>
-      <button type="button" class="btn btn-wa only-send" id="wa-guide-go">Paylaşım menüsünü aç</button>
     </div>
   </div>
 </div>
@@ -1323,6 +1343,19 @@ html:not(.js) .install-btn{display:none!important;}
     </div>
   </div>
 </div>
+<div id="msg-step" class="modal sheet" role="dialog" aria-modal="true" aria-labelledby="msg-step-title" hidden>
+  <div class="modal-card">
+    <div class="modal-head"><span class="ok-badge">&#10003;</span><h2 id="msg-step-title">Form dosyası paylaşıldı</h2></div>
+    <p class="modal-lead">WhatsApp, belgeyle birlikte açıklama metnini çoğu zaman iletmez. Bilgi mesajını da göndermek için:</p>
+    <button type="button" class="btn btn-wa ms-send"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.1-.6.2-.2.3-.7 1-.9 1.1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.6-1.5-.9-2-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.7-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.1-.2-.3-.2-.6-.4zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.4 1.3 4.9L2 22l5.3-1.4c1.4.8 3 1.2 4.7 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg> Bilgi mesajını WhatsApp'ta gönder</button>
+    <p class="ms-note"><span class="ms-recent">Açılan listede, dosyayı gönderdiğiniz sohbet en üstte görünür.</span><span class="ms-dept">Mesaj, anabilim dalının WhatsApp hattına hazır yazılı açılır.</span></p>
+    <button type="button" class="btn btn-ghost ms-web">WhatsApp Web'de gönder</button>
+    <div class="ms-clip">&#128203; <b>Ya da:</b> Mesaj panoya kopyalandı. WhatsApp'ta aynı sohbette mesaj kutusuna <span class="ms-mob">basılı tutup <b>Yapıştır</b>'ı seçin</span><span class="ms-desk">tıklayıp <b>Ctrl+V</b> ile yapıştırın</span> ve gönderin. <button type="button" class="ms-copy">Tekrar kopyala</button></div>
+    <details class="ms-details"><summary>Gönderilecek mesaj</summary><pre class="ms-preview"></pre></details>
+    <div class="modal-actions"><button type="button" class="btn btn-ghost" data-close>Kapat</button></div>
+  </div>
+</div>
+<div id="hint-top" role="status" hidden></div>
 <div id="print-summary" aria-hidden="true"></div>
 
 <script>
@@ -1658,9 +1691,9 @@ function saveFilled(){
 var DEPT_EMAIL = '';           // örn. 'patoloji@mehmetakif.edu.tr'
 var DEPT_WHATSAPP = '';        // örn. '905xxxxxxxxx' (başında 90, boşluksuz)
 function formTitle(){ var f=activeForm(); return f?(f.getAttribute('data-title')||'Patoloji Formu'):'Patoloji Formu'; }
-function sendMsgText(){
+function sendMsgText(fileName){
   var owner=ownerRaw();
-  return 'Burdur MAKÜ Veteriner Fakültesi Patoloji Anabilim Dalı — '+formTitle()+'.'+(owner?('\nHasta sahibi: '+owner):'')+'\n\nDoldurulmuş form dosyası ektedir.';
+  return 'Burdur MAKÜ Veteriner Fakültesi Patoloji Anabilim Dalı — '+formTitle()+'.'+(owner?('\nHasta sahibi: '+owner):'')+(fileName?('\nDosya: '+fileName):'')+'\n\nDoldurulmuş form dosyası ektedir.';
 }
 function isIOS(){ return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1); }
 function shareForm(kind){
@@ -1670,10 +1703,18 @@ function shareForm(kind){
   try{ file=new File([r.html], r.name, {type:'text/html'}); }catch(e){ file=null; }
   var can=false;
   try{ can=!!(file && navigator.share && navigator.canShare && navigator.canShare({files:[file]})); }catch(e){ can=false; }
+  var msg=sendMsgText(r.name);
+  var wa=(kind==='whatsapp');
+  if(wa){ window._clipFailed=!copyText(msg); }      // WhatsApp belge açıklamasını iletmediği için mesaj panoya
   if(can){
     var data={ files:[file], title: r.name.replace(/\.html$/,'') };
-    if(!isIOS()) data.text=sendMsgText();       // iOS'ta metin+dosya birlikte gönderilince bazı uygulamalar dosyayı düşürüyor
-    navigator.share(data).catch(function(err){
+    if(!(wa && isIOS())) data.text=msg;             // iOS WhatsApp'ta metin+dosya birlikteyken dosya düşebiliyor
+    if(wa && /Android/i.test(navigator.userAgent) && !window._clipFailed)
+      showHintTop('&#128203; Bilgi mesajı panoya kopyalandı — WhatsApp sohbetinde yapıştırıp gönderebilirsiniz');
+    navigator.share(data).then(function(){
+      if(wa) showMsgStep(msg);
+    }).catch(function(err){
+      hideHintTop();
       if(err && err.name==='AbortError') return;  // kullanıcı paylaşımı iptal etti
       fallbackShare(kind, r, false);
     });
@@ -1690,10 +1731,9 @@ function fallbackShare(kind, r, canOpen){
   if(mail){
     var owner=ownerRaw();
     var subject=encodeURIComponent('Patoloji İnceleme — '+formTitle()+(owner?(' — '+owner):''));
-    window.location.href='mailto:'+(DEPT_EMAIL||'')+'?subject='+subject+'&body='+encodeURIComponent(sendMsgText());
+    window.location.href='mailto:'+(DEPT_EMAIL||'')+'?subject='+subject+'&body='+encodeURIComponent(sendMsgText(r.name));
   } else {
-    var base=DEPT_WHATSAPP?('https://wa.me/'+DEPT_WHATSAPP+'?text='):'https://wa.me/?text=';
-    window.open(base+encodeURIComponent(sendMsgText()), '_blank');
+    window.open('https://wa.me/'+waPhone()+'?text='+encodeURIComponent(sendMsgText(r.name)), '_blank');
   }
 }
 function sendEmail(){ shareForm('email'); }
@@ -1703,6 +1743,7 @@ function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; 
 function lsSet(k,v){ try{ if(v==null) localStorage.removeItem(k); else localStorage.setItem(k,v); }catch(e){} }
 function hideOverlays(){
   document.querySelectorAll('.modal').forEach(function(m){ m.hidden=true; });
+  var ht=document.getElementById('hint-top'); if(ht) ht.hidden=true;
   var t=document.getElementById('toast'); if(t) t.hidden=true;
 }
 var _toastTimer=null;
@@ -1721,14 +1762,12 @@ function showToast(html, actions){
 function sendWhatsApp(){
   if(!requireOwner()) return;
   if(isWindows()){ waWindowsStart(); return; }
-  if(lsGet('waGuideHide')==='1'){ shareForm('whatsapp'); return; }
-  openWaGuide(false);
+  shareForm('whatsapp');
 }
-function openWaGuide(infoOnly){
+function openWaGuide(){                          // yalnız ana menüdeki yardım bağlantısından açılır
   var m=document.getElementById('wa-guide'); if(!m) return;
-  m.classList.toggle('info-only', !!infoOnly);
+  m.classList.add('info-only');
   m.classList.toggle('is-ios', isIOS());
-  var cb=document.getElementById('wa-guide-hide'); if(cb) cb.checked=false;
   m.hidden=false;
 }
 // Windows: uygulama yüklüyse uygulama, değilse WhatsApp Web
@@ -1740,17 +1779,19 @@ function waWindowsStart(){
 function waChangePref(){ lsSet('waWinMode', null); showToast('Tercih sıfırlandı. WhatsApp butonuna tekrar bastığınızda yeniden sorulacak.', []); }
 function waWindowsGo(mode){
   var r=buildFilledFile();
+  var msg=sendMsgText(r.name);
   if(mode==='app'){
     // Windows paylaşım penceresi: WhatsApp uygulaması dosyayı hazır ekli alır
     var file=null, can=false;
     try{ file=new File([r.html], r.name, {type:'text/html'}); }catch(e){ file=null; }
     try{ can=!!(file && navigator.share && navigator.canShare && navigator.canShare({files:[file]})); }catch(e){ can=false; }
     if(can){
+      window._clipFailed=!copyText(msg);
       showToast('Açılan Windows paylaşım penceresinde <b>WhatsApp</b>\'ı seçin; form dosyası hazır ekli gelecek.',
         [{label:"WhatsApp listede yoksa: WhatsApp Web", fn:function(){ lsSet('waWinMode','web'); waWindowsDirect(r,'web'); }},
          {label:'Tercihimi değiştir', fn:waChangePref}]);
-      navigator.share({files:[file], title:r.name.replace(/\.html$/,''), text:sendMsgText()})
-        .then(function(){ var t=document.getElementById('toast'); if(t) t.hidden=true; })
+      navigator.share({files:[file], title:r.name.replace(/\.html$/,''), text:msg})
+        .then(function(){ var t=document.getElementById('toast'); if(t) t.hidden=true; showMsgStep(msg); })
         .catch(function(err){ if(err && err.name==='AbortError') return; waWindowsDirect(r,'app'); });
       return;
     }
@@ -1760,8 +1801,8 @@ function waWindowsGo(mode){
 // Paylaşım penceresi kullanılamadığında: dosyayı indir + WhatsApp'ı (uygulama/Web) doğrudan aç
 function waWindowsDirect(r, mode){
   downloadFile(r.name, r.html);
-  var text=encodeURIComponent(sendMsgText());
-  var webUrl='https://web.whatsapp.com/send?text='+text;
+  var ph=waPhone(), q=(ph?('phone='+ph+'&'):'')+'text='+encodeURIComponent(sendMsgText(r.name));
+  var webUrl='https://web.whatsapp.com/send?'+q;
   var fileLine='Form dosyası indirildi: <b>'+_esc(r.name)+'</b><br>';
   var how='Kişiyi seçin, ardından tarayıcının İndirilenler listesindeki dosyayı sohbet penceresine sürükleyip bırakın (ya da ataç &#128206; → Belge).';
   function openWeb(){ window.open(webUrl, '_blank'); }
@@ -1773,7 +1814,7 @@ function waWindowsDirect(r, mode){
   var opened=false;
   window.addEventListener('blur', function(){ opened=true; }, {once:true});
   document.addEventListener('visibilitychange', function(){ if(document.hidden) opened=true; }, {once:true});
-  try{ window.location.href='whatsapp://send?text='+text; }catch(e){}
+  try{ navigateExternal('whatsapp://send?'+q); }catch(e){}
   showToast(fileLine+'WhatsApp uygulaması açılıyor. '+how, [{label:"WhatsApp Web'de aç", fn:openWeb}]);
   setTimeout(function(){
     if(opened) return;
@@ -1785,12 +1826,6 @@ function waWindowsDirect(r, mode){
 
 (function(){
   document.body.classList.toggle('is-windows', isWindows());
-  var go=document.getElementById('wa-guide-go');
-  if(go) go.addEventListener('click', function(){
-    var cb=document.getElementById('wa-guide-hide'); if(cb && cb.checked) lsSet('waGuideHide','1');
-    hideOverlays();
-    shareForm('whatsapp');
-  });
   document.querySelectorAll('#wa-win [data-wa]').forEach(function(b){
     b.addEventListener('click', function(){
       var mode=b.getAttribute('data-wa');
@@ -1803,6 +1838,67 @@ function waWindowsDirect(r, mode){
   document.querySelectorAll('.modal').forEach(function(m){ m.addEventListener('click', function(e){ if(e.target===m) hideOverlays(); }); });
   var tx=document.querySelector('#toast .toast-x'); if(tx) tx.addEventListener('click', function(){ document.getElementById('toast').hidden=true; });
 })();
+// ====== Bilgi mesajı: pano, WhatsApp metin bağlantısı, panel ======
+var _lastMsg='', _hintTimer=null;
+function navigateExternal(u){ window.location.href=u; }
+function waPhone(){ return String(DEPT_WHATSAPP||'').replace(/\D/g,''); }
+function legacyCopy(t){
+  var ta=document.createElement('textarea'); ta.value=t; ta.setAttribute('readonly','');
+  ta.style.cssText='position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;pointer-events:none;';
+  document.body.appendChild(ta); ta.select(); try{ ta.setSelectionRange(0, t.length); }catch(e){}
+  var ok=false; try{ ok=document.execCommand('copy'); }catch(e){ ok=false; }
+  document.body.removeChild(ta); return ok;
+}
+function copyText(t){
+  try{
+    if(navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext){
+      navigator.clipboard.writeText(t).catch(function(){
+        if(!legacyCopy(t)){ window._clipFailed=true; var m=document.getElementById('msg-step'); if(m) m.classList.remove('copied'); }
+      });
+      return true;
+    }
+  }catch(e){}
+  return legacyCopy(t);
+}
+function waTextUrl(msg){
+  var t=encodeURIComponent(msg), ph=waPhone(), q=(ph?('phone='+ph+'&'):'')+'text='+t;
+  if(/Android/i.test(navigator.userAgent))
+    return 'intent://send?'+q+'#Intent;scheme=whatsapp;S.browser_fallback_url='+encodeURIComponent('https://wa.me/'+ph+'?text='+t)+';end';
+  if(isIOS()) return 'whatsapp://send?'+q;
+  if(isWindows()) return lsGet('waWinMode')==='web' ? ('https://web.whatsapp.com/send?'+q) : ('whatsapp://send?'+q);
+  return 'https://wa.me/'+ph+'?text='+t;
+}
+function openWhatsAppText(msg){
+  var u=waTextUrl(msg);
+  if(/^https?:/i.test(u)) window.open(u, '_blank'); else navigateExternal(u);
+}
+function showHintTop(html){
+  var e=document.getElementById('hint-top'); if(!e) return;
+  e.innerHTML=html; e.hidden=false;
+  clearTimeout(_hintTimer); _hintTimer=setTimeout(function(){ e.hidden=true; }, 20000);
+}
+function hideHintTop(){ var e=document.getElementById('hint-top'); if(e) e.hidden=true; }
+function showMsgStep(msg){
+  _lastMsg=msg; hideHintTop();
+  var m=document.getElementById('msg-step'); if(!m) return;
+  m.querySelector('.ms-preview').textContent=msg;
+  m.classList.toggle('copied', !window._clipFailed);
+  m.classList.toggle('is-desktop', isWindows());
+  m.classList.toggle('has-dept', !!waPhone());
+  var c=m.querySelector('.ms-copy'); if(c) c.textContent='Tekrar kopyala';
+  m.hidden=false;
+}
+(function(){
+  var m=document.getElementById('msg-step'); if(!m) return;
+  m.querySelector('.ms-send').addEventListener('click', function(){ var t=_lastMsg; hideOverlays(); openWhatsAppText(t); });
+  m.querySelector('.ms-web').addEventListener('click', function(){
+    var t=_lastMsg, ph=waPhone(); hideOverlays();
+    window.open('https://web.whatsapp.com/send?'+(ph?('phone='+ph+'&'):'')+'text='+encodeURIComponent(t), '_blank');
+  });
+  var c=m.querySelector('.ms-copy');
+  c.addEventListener('click', function(){ window._clipFailed=!copyText(_lastMsg); c.textContent=window._clipFailed?'Kopyalanamadı':'Kopyalandı ✓'; });
+})();
+
 // ====== Uygulama olarak yükleme ======
 var _deferredPrompt=null;
 function isStandalone(){
