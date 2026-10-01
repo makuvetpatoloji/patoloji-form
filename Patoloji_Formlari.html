@@ -475,14 +475,12 @@ html:not(.js) .install-btn{display:none!important;}
 #attach-card[hidden]{display:none!important;}
 .ac-x{position:absolute;top:6px;right:8px;border:none;background:none;font-size:22px;line-height:1;color:var(--muted);cursor:pointer;}
 .ac-title{font-weight:700;font-size:15px;margin:0 22px 10px 0;}
-.ac-file{display:flex;align-items:center;gap:10px;border:2px dashed #25d366;background:#f1fbf5;border-radius:11px;padding:10px 12px;cursor:grab;user-select:none;-webkit-user-drag:element;}
-.ac-file:active{cursor:grabbing;}
+.ac-file{display:flex;align-items:center;gap:10px;border:1.5px solid #25d366;background:#f1fbf5;border-radius:11px;padding:10px 12px;}
 .ac-ico{width:34px;height:34px;border-radius:8px;background:#25d366;color:#fff;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;}
 .ac-ico svg{width:20px;height:20px;}
 .ac-name{flex:1 1 auto;min-width:0;font-weight:700;font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .ac-ok{flex:0 0 auto;font-size:12px;color:#1a7f37;font-weight:700;}
-.ac-s-app,.ac-s-web{display:none;} #attach-card.mode-app .ac-s-app,#attach-card.mode-web .ac-s-web{display:list-item;}
-.ac-hint{font-size:12px;color:var(--muted);margin:2px 0 8px;}
+
 .ac-steps{margin:10px 0 8px;padding-left:20px;font-size:13.5px;line-height:1.5;}
 .ac-steps li{margin-bottom:4px;}
 .ac-alt{display:block;color:var(--muted);font-size:12.5px;}
@@ -490,6 +488,7 @@ html:not(.js) .install-btn{display:none!important;}
 .ac-actions{display:flex;gap:8px;flex-wrap:wrap;}
 .ac-actions button{border:1.5px solid var(--line-strong);background:#fff;color:var(--ink);border-radius:9px;padding:8px 12px;font-weight:700;font-size:13px;cursor:pointer;font-family:var(--font);}
 #attach-card.not-opened .ac-web{background:#25d366;border-color:#25d366;color:#fff;}
+.ac-actions .ac-dl{background:#12333d;border-color:#12333d;color:#fff;}
 html:not(.js) #attach-card{display:none!important;}
 @media print{ #attach-card{display:none!important;} }
 </style>
@@ -1372,20 +1371,19 @@ html:not(.js) #attach-card{display:none!important;}
 <div id="attach-card" role="dialog" aria-labelledby="ac-title" hidden>
   <button type="button" class="ac-x" aria-label="Kapat">&times;</button>
   <div class="ac-title" id="ac-title">Formu WhatsApp sohbetine ekleyin</div>
-  <div class="ac-file" draggable="true" title="Tutup WhatsApp sohbet penceresine sürükleyin">
+  <div class="ac-file">
     <span class="ac-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
     <span class="ac-name"></span>
     <span class="ac-ok">İndirildi &#10003;</span>
   </div>
   <ol class="ac-steps">
     <li>WhatsApp'ta <b>kişiyi seçin</b> — bilgi mesajı hazır yazılı gelir.</li>
-    <li class="ac-s-web">Tarayıcının <b>sağ üstündeki İndirilenler (&#11015;)</b> listesinde <b class="ac-fname"></b> dosyasını görürsünüz. Dosyayı <b>tutup sohbet penceresine sürükleyip bırakın</b>.<span class="ac-alt">Ya da sohbette <b>ataç (&#128206;) → Belge</b>'ye tıklayıp <b>İndirilenler</b> klasöründen seçin.</span></li>
-    <li class="ac-s-app">Sohbette <b>ataç (&#128206;) → Belge</b>'ye tıklayın, <b>İndirilenler</b> klasöründe en üstteki <b class="ac-fname"></b> dosyasını seçip <b>Aç</b>'a basın.<span class="ac-alt">Ya da tarayıcının sağ üstündeki <b>İndirilenler (&#11015;)</b> listesinden dosyayı sohbet penceresine sürükleyin.</span></li>
+    <li>Sohbette <b>ataç (&#128206;) → Belge</b>'ye tıklayın, <b>İndirilenler</b> klasöründe <b class="ac-fname"></b> dosyasını seçip <b>Aç</b>'a basın.<span class="ac-alt">Dosyayı İndirilenler'de göremezseniz aşağıdaki <b>Dosyayı tekrar indir</b> düğmesine basın.</span></li>
     <li><b>Gönder</b>'e basın.</li>
   </ol>
-  <p class="ac-hint">İpucu: Bazı bilgisayarlarda yukarıdaki dosya kartını doğrudan sohbete sürüklemek de çalışır.</p>
   <div class="ac-warn" hidden>WhatsApp uygulaması açılmadıysa bu bilgisayarda yüklü olmayabilir.</div>
   <div class="ac-actions">
+    <button type="button" class="ac-dl">&#11015; Dosyayı tekrar indir</button>
     <button type="button" class="ac-web">WhatsApp Web'de aç</button>
     <button type="button" class="ac-pref">Tercihimi değiştir</button>
   </div>
@@ -1813,24 +1811,11 @@ function waWindowsGo(mode){
   var r=buildFilledFile();
   waWindowsDirect(r, mode);
 }
-var _acBlobUrl=null;
-function setAttachMode(mode){
+function showAttachCard(r, openWeb){
   var c=document.getElementById('attach-card'); if(!c) return;
-  c.classList.toggle('mode-web', mode==='web'); c.classList.toggle('mode-app', mode!=='web');
-}
-function showAttachCard(r, openWeb, mode){
-  var c=document.getElementById('attach-card'); if(!c) return;
-  if(_acBlobUrl){ try{ URL.revokeObjectURL(_acBlobUrl); }catch(e){} }
-  var blob=new Blob([r.html], {type:'text/html'});
-  _acBlobUrl=URL.createObjectURL(blob);
   c.querySelector('.ac-name').textContent=r.name;
   c.querySelectorAll('.ac-fname').forEach(function(e){ e.textContent=r.name; });
-  var file={name:r.name, url:_acBlobUrl, dataUrl:null};
-  c._file=file;
-  // Sürükleyerek dosya oluşturmada tarayıcılar data: adresini güvenilir işler; önceden hazırla
-  try{ var fr=new FileReader(); fr.onload=function(){ if(c._file===file) file.dataUrl=fr.result; }; fr.readAsDataURL(blob); }catch(e){}
-  c._openWeb=openWeb;
-  setAttachMode(mode);
+  c._file=r; c._openWeb=openWeb;
   c.classList.remove('not-opened'); c.querySelector('.ac-warn').hidden=true;
   c.hidden=false;
 }
@@ -1838,13 +1823,9 @@ function waWindowsDirect(r, mode){
   var ph=waPhone(), q=(ph?('phone='+ph+'&'):'')+'text='+encodeURIComponent(sendMsgText(r.name));
   var webUrl='https://web.whatsapp.com/send?'+q;
   function openWeb(){ window.open(webUrl, '_blank'); }
-  showAttachCard(r, openWeb, mode);
-  if(mode==='web'){
-    openWeb();                                   // önce WhatsApp Web sekmesi açılır,
-    downloadFile(r.name, r.html);                // indirilen dosya tarayıcının İndirilenler listesinde o sekmenin üstünde görünür
-    return;
-  }
-  downloadFile(r.name, r.html);                  // dosya İndirilenler klasörüne kaydedilir (ataç → Belge ile seçilir)
+  downloadFile(r.name, r.html);                  // 1) önce dosya İndirilenler klasörüne kaydedilir
+  showAttachCard(r, openWeb);
+  if(mode==='web'){ openWeb(); return; }         // 2) sonra WhatsApp (mesaj hazır yazılı) açılır
   var opened=false;
   window.addEventListener('blur', function(){ opened=true; }, {once:true});
   document.addEventListener('visibilitychange', function(){ if(document.hidden) opened=true; }, {once:true});
@@ -1857,17 +1838,10 @@ function waWindowsDirect(r, mode){
 }
 (function(){
   var c=document.getElementById('attach-card'); if(!c) return;
-  var f=c.querySelector('.ac-file');
-  f.addEventListener('dragstart', function(e){
-    var d=c._file; if(!d || !e.dataTransfer) return;
-    try{ e.dataTransfer.effectAllowed='copy'; }catch(x){}
-    // Chrome/Edge: dosya olarak sürükleme. Bağlantı/metin verisi eklenmez (hedef uygulama dosya yerine metni almasın).
-    try{ e.dataTransfer.setData('DownloadURL', 'text/html:'+d.name+':'+(d.dataUrl||d.url)); }catch(x){}
-  });
+  c.querySelector('.ac-dl').addEventListener('click', function(){ var d=c._file; if(d) downloadFile(d.name, d.html); });
   c.querySelector('.ac-x').addEventListener('click', function(){ c.hidden=true; });
   c.querySelector('.ac-web').addEventListener('click', function(){
     if(c.classList.contains('not-opened')) lsSet('waWinMode','web');
-    setAttachMode('web');
     if(c._openWeb) c._openWeb();
   });
   c.querySelector('.ac-pref').addEventListener('click', function(){ c.hidden=true; waChangePref(); });
